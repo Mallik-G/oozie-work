@@ -1,0 +1,9 @@
+1234,revanth reddy,ECE,2015
+1235,singam reddy,EEE,2015
+1236,ravikanth reddy,CSE,2015
+1231,kiran,ECE,2015
+1232,singam ,EEE,2015
+1233,Nanda,CSE,2015
+1237,Kishore reddy,ECE,2015
+1238,Shyam reddy,MEC,2015
+1239,ravi,IT,2015

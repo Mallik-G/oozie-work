@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<configuration>
+    <property>
+        <name>oozie.service.HadoopAccessorService.hadoop.configurations</name>
+        <value>*=/etc/hadoop/</value>
+        <description>
+            Comma separated AUTHORITY=HADOOP_CONF_DIR, where AUTHORITY is the HOST:PORT of
+            the Hadoop service (JobTracker, HDFS). The wildcard '*' configuration is
+            used when there is no exact match for an authority. The HADOOP_CONF_DIR contains
+            the relevant Hadoop *-site.xml files. If the path is relative is looked within
+            the Oozie configuration directory; though the path can be absolute (i.e. to point
+            to Hadoop client conf/ directories in the local filesystem.
+        </description>
+    </property>
+<property>
+        <name>oozie.services.ext</name>
+        <value>
+            org.apache.oozie.service.JMSAccessorService,
+            org.apache.oozie.service.JMSTopicService,
+            org.apache.oozie.service.EventHandlerService,
+            org.apache.oozie.sla.service.SLAService
+        </value>
+ </property>
+
+ <property>
+        <name>oozie.service.EventHandlerService.event.listeners</name>
+        <value>
+            org.apache.oozie.jms.JMSJobEventListener,
+            org.apache.oozie.sla.listener.SLAJobEventListener,
+            org.apache.oozie.jms.JMSSLAEventListener,
+            org.apache.oozie.sla.listener.SLAEmailEventListener
+        </value>
+ </property>
+ <property>
+       <name>oozie.jms.producer.connection.properties</name>
+       <value>java.naming.factory.initial#org.apache.activemq.jndi.ActiveMQInitialContextFactory;java.naming.provider.url#tcp://172.31.5.48:61616;connectionFactoryNames#ConnectionFactory</value>
+ </property>
+ <property>
+        <name>oozie.service.JMSTopicService.topic.name</name>
+        <value>
+             default=${username}
+        </value>
+        <description>
+            Topic options are ${username} or a fixed string which can be specified as default or for a
+            particular job type.
+            For e.g To have a fixed string topic for workflows, coordinators and bundles,
+            specify in the following comma-separated format: {jobtype1}={some_string1}, {jobtype2}={some_string2}
+            where job type can be WORKFLOW, COORDINATOR or BUNDLE.
+            Following example defines topic for workflow job, workflow action, coordinator job, coordinator action,
+            bundle job and bundle action
+            WORKFLOW=workflow,
+            COORDINATOR=coordinator,
+            BUNDLE=bundle
+            For jobs with no defined topic, default topic will be ${username}
+        </description>
+ </property>
+ <property>
+        <name>oozie.service.JMSTopicService.topic.prefix</name>
+        <value></value>
+        <description>
+            This can be used to append a prefix to the topic in oozie.service.JMSTopicService.topic.name. For eg: oozie.
+        </description>
+ </property>
+    <property>
+        <name>oozie.service.coord.normal.default.timeout</name>
+        <value>4320</value>
+        <description>
+            Default timeout for a coordinator action input check (in minutes) for normal job. -1 means infinite timeout
+        </description>
+    </property>
+
+    <property>
+        <name>oozie.service.WorkflowAppService.system.libpath</name>
+        <value>hdfs:///user/${user.name}/share/lib</value>
+        <description>
+            System library path to use for workflow applications.
+            This path is added to workflow application if their job properties sets
+            the property 'oozie.use.system.libpath' to true.
+        </description>
+    </property>
+    <property>
+            <name>oozie.launcher.mapred.job.queue.name</name>
+             <value>jobs</value>
+     </property>
+     <property>
+             <name>oozie.launcher.mapreduce.job.queuename</name>
+              <value>jobs</value>
+      </property>
+    <property>
+	    <name>oozie.service.SparkConfigurationService.spark.configurations</name>
+        <value>*=/home/centos/spark/conf/</value>
+     </property>
+    <!--
+        Refer to the oozie-default.xml file for the complete list of
+        Oozie configuration properties and their default values.
+    -->
+
+    <!-- Proxyuser Configuration -->
+
+    <!--
+
+    <property>
+        <name>oozie.service.ProxyUserService.proxyuser.#USER#.hosts</name>
+        <value>*</value>
+        <description>
+            List of hosts the '#USER#' user is allowed to perform 'doAs'
+            operations.
+
+            The '#USER#' must be replaced with the username o the user who is
+            allowed to perform 'doAs' operations.
+
+            The value can be the '*' wildcard or a list of hostnames.
+
+            For multiple users copy this property and replace the user name
+            in the property name.
+        </description>
+    </property>
+
+    <property>
+        <name>oozie.service.ProxyUserService.proxyuser.#USER#.groups</name>
+        <value>*</value>
+        <description>
+            List of groups the '#USER#' user is allowed to impersonate users
+            from to perform 'doAs' operations.
+
+            The '#USER#' must be replaced with the username o the user who is
+            allowed to perform 'doAs' operations.
+
+            The value can be the '*' wildcard or a list of groups.
+
+            For multiple users copy this property and replace the user name
+            in the property name.
+        </description>
+    </property>
+
+    -->
+
+</configuration>

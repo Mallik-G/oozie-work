@@ -1,0 +1,26 @@
+<coordinator-app name="${cord_app_name}" frequency="${coord:hours(1)}" start="${start}" end="${end}" timezone="UTC"
+     xmlns="uri:oozie:coordinator:0.4" xmlns:sla="uri:oozie:sla:0.2">
+    <action>
+        <workflow>
+            <app-path>${nameNode}/user/${coord:user()}/${examplesRoot}/apps/map-reduce/workflow_sla.xml</app-path>
+                <configuration>
+                <property>
+                    <name>jobTracker</name>
+                    <value>${jobTracker}</value>
+                </property>
+                <property>
+                    <name>nameNode</name>
+                    <value>${nameNode}</value>
+                </property>
+                <property>
+                    <name>queueName</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>nominalTime</name>
+                    <value>${coord:nominalTime()}</value>
+                </property>
+            </configuration>
+        </workflow>
+    </action>
+</coordinator-app>

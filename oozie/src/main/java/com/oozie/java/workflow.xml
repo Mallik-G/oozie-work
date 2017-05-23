@@ -1,11 +1,11 @@
-<workflow-app name="Oozie_Java_Action" xmlns="uri:oozie:workflow:0.1">
+<workflow-app name="Oozie_MapReduce_Action" xmlns="uri:oozie:workflow:0.1">
 	<start to="javaMainAction" />
 	<action name="javaMainAction">
 		<java>
 			<job-tracker>${jobTracker}</job-tracker>
 			<name-node>${nameNode}</name-node>
 			<prepare>
-				<delete path="${nameNode}/user/${wf:user()}/oozie/output-data/${outputDir}" />
+				<delete path="${nameNode}/user/${user.name}/oozie/test/output" />
 			</prepare>
 			<configuration>
 				<property>

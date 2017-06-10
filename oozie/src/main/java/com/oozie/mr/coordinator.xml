@@ -1,0 +1,29 @@
+<coordinator-app name="gobblin-oozie-SequenceJob-cord"
+        frequency="${coord:minutes(period_min)}"
+        start="${start}" end="${end}" timezone="UTC"
+        xmlns="uri:oozie:coordinator:0.4"
+        xmlns:sla="uri:oozie:sla:0.2">
+        <controls>
+            <timeout>600</timeout>
+            <concurrency>1</concurrency>
+            <throttle>2</throttle>
+        </controls>
+        <action>
+                <workflow>
+                        <app-path>${wfApplicationPath}</app-path>
+                        <configuration>
+                                <property>
+                                    <name>nominalTime</name>
+                                    <value>${coord:nominalTime()}</value>
+                                </property>
+                        </configuration>
+                </workflow>
+                <sla:info>
+                    <sla:nominal-time>${coord:nominalTime()}</sla:nominal-time>
+                    <sla:should-start>${3 * MINUTES}</sla:should-start>
+                    <sla:should-end>${15 * MINUTES}</sla:should-end>
+                    <sla:max-duration>${20 * MINUTES}</sla:max-duration>
+                </sla:info>
+        </action>
+
+</coordinator-app>
